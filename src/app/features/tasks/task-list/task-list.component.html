@@ -1,0 +1,44 @@
+<div class="task-container">
+    <!-- Header -->
+    <div class="header">
+      <h2>Task List</h2>
+      <button routerLink="/task/create" class="create-btn">+ Create Task</button>
+    </div>
+  
+    <!-- Loading State -->
+    <p *ngIf="loading">Loading tasks...</p>
+  
+    <!-- Error State -->
+    <p *ngIf="error" class="error">Failed to load tasks.</p>
+  
+    <!-- Empty State -->
+    <div *ngIf="!loading && !error && tasks.length === 0" class="empty">
+      <p>No tasks available. Please create a task.</p>
+    </div>
+  
+    <!-- Task Table -->
+    <table *ngIf="!loading && !error && tasks.length > 0" class="task-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Actions</th> <!-- For edit/delete -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>
+            <span [ngClass]="task.status">{{ task.status }}</span>
+          </td>
+          <td>
+            <!-- <button (click)="editTask(task.id)" class="edit-btn">Edit</button> -->
+            <!-- <button (click)="deleteTask(task.id)" class="delete-btn">Delete</button> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
