@@ -1,0 +1,55 @@
+<div class="dashboard-container">
+
+    <!-- Welcome User -->
+    <h2>Welcome, {{ username }} 👋</h2>
+  
+    <!-- Loading State -->
+    <div *ngIf="loading" class="status-message">Loading dashboard...</div>
+  
+    <!-- Error State -->
+    <div *ngIf="error" class="status-message error">Failed to load tasks.</div>
+  
+    <!-- Dashboard Summary -->
+    <div *ngIf="!loading && !error">
+  
+      <!-- Empty State -->
+      <div *ngIf="total === 0" class="status-message">
+        No tasks available. Please create a task.
+      </div>
+  
+      <!-- Summary Cards -->
+      <div *ngIf="total > 0" class="summary-grid">
+        
+        <!-- Total Tasks -->
+        <div class="card">
+          <h3>Total Tasks</h3>
+          <p>{{ total }}</p>
+          <span class="description">Count of all tasks</span>
+        </div>
+  
+        <!-- Todo Tasks -->
+        <div class="card">
+          <h3>Todo</h3>
+          <p>{{ todo }}</p>
+          <span class="description">Tasks with status todo</span>
+        </div>
+  
+        <!-- In Progress Tasks -->
+        <div class="card">
+          <h3>In Progress</h3>
+          <p>{{ inProgress }}</p>
+          <span class="description">Tasks with status in-progress</span>
+        </div>
+  
+        <!-- Done Tasks -->
+        <div class="card">
+          <h3>Done</h3>
+          <p>{{ done }}</p>
+          <span class="description">Tasks with status done</span>
+        </div>
+  
+      </div>
+    </div>
+  
+  </div>
+  

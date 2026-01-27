@@ -8,7 +8,7 @@ import { getActiveConsumer } from "@angular/core/primitives/signals";
 })
 
 export class AuthService {
-    private dummyUser={id:1,username:'admin',password:'admin123'};
+    private dummyUser={id:1,username:'maneesh',password:'maneesh123'};
 
     constructor(){}
 
