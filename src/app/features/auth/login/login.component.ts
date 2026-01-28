@@ -26,6 +26,9 @@ export class LoginComponent implements OnInit {
           username: ['', Validators.required],
           password: ['', Validators.required]
         });
+        if (this.authService.isLoggedIn()) {
+          this.router.navigate(['/dashboard']); // redirect already logged-in users
+        }
       }
       submit(): void {
         if (this.loginForm.invalid) {
