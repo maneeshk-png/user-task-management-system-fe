@@ -11,7 +11,8 @@ export const routes: Routes = [
 {path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
 { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'task', component:TaskListComponent, canActivate: [AuthGuard] },
-  { path: 'task/create', component:TaskFormComponent, canActivate: [AuthGuard] }
+  { path: 'task/create', component:TaskFormComponent, canActivate: [AuthGuard] },
+  {path:'task/edit/:id',component:TaskFormComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({

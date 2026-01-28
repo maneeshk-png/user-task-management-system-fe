@@ -33,3 +33,14 @@
     color: green;
   }
   
+
+
+  .error-page{
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight:500;
+    color: #b91c1c;
+  }
