@@ -9,9 +9,9 @@ import { delay, Observable, of, throwError } from "rxjs";
 export class TaskService {
 
     private tasks:Task[]=[
-        { id: 1, title: 'Setup project', description: 'setup the base project structure', status: 'todo' },
-    { id: 2, title: 'Login feature', description: 'complete the login feature', status: 'in-progress' },
-    { id: 3, title: 'Dashboard UI', description: 'complete the dashboard ui', status: 'done' }
+    //     { id: 1, title: 'Setup project', description: 'setup the base project structure', status: 'todo' },
+    // { id: 2, title: 'Login feature', description: 'complete the login feature', status: 'in-progress' },
+    // { id: 3, title: 'Dashboard UI', description: 'complete the dashboard ui', status: 'done' }
     ];
     private idCounter=1;
 
