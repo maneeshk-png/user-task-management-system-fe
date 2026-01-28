@@ -4,7 +4,6 @@
       <p class="subtitle">Login to continue</p>
   
       <form [formGroup]="loginForm" (ngSubmit)="submit()">
-  
         <div class="form-group">
           <label>Username</label>
           <input type="text" formControlName="username" placeholder="Enter username">
@@ -20,13 +19,10 @@
             Password is required
           </div>
         </div>
-  
         <div class="error server-error" *ngIf="errorMsg">{{ errorMsg }}</div>
-  
         <button type="submit" [disabled]="loading">
           {{ loading ? 'Logging in...' : 'Login' }}
         </button>
-  
       </form>
     </div>
   </div>

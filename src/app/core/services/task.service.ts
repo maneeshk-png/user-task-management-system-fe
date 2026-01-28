@@ -1,59 +1,72 @@
 import { Injectable } from "@angular/core";
 import { Task } from "../models/task.model";
 import { delay, Observable, of, throwError } from "rxjs";
+import { StorageService } from "./storage.service";
 
-@Injectable({
-    providedIn:'root'
-})
-
+@Injectable({ providedIn: 'root' })
 export class TaskService {
 
-    private tasks:Task[]=[
-    //     { id: 1, title: 'Setup project', description: 'setup the base project structure', status: 'todo' },
-    // { id: 2, title: 'Login feature', description: 'complete the login feature', status: 'in-progress' },
-    // { id: 3, title: 'Dashboard UI', description: 'complete the dashboard ui', status: 'done' }
-    ];
-    private idCounter=1;
+  private storageKey = 'tasks';
 
-    getTasks():Observable<Task[]> {
-        return of(this.tasks).pipe(delay(1000));
+  constructor(private storage: StorageService) {}
+
+  // Always read fresh from localStorage
+  private get tasks(): Task[] {
+    return this.storage.getItem<Task[]>(this.storageKey) || [];
+  }
+
+  private saveTasks(tasks: Task[]): void {
+    this.storage.setItem(this.storageKey, tasks);
+  }
+
+  getTasks(): Observable<Task[]> {
+    return of(this.tasks).pipe(delay(500));
+  }
+
+  createTask(task: Omit<Task, 'id'>): Observable<Task> {
+    const tasks = this.tasks;
+
+    const newTask: Task = {
+      id: tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1,
+      title: task.title!,
+      description: task.description || '',
+      status: task.status || 'todo'
+    };
+
+    tasks.push(newTask);
+    this.saveTasks(tasks);
+
+    return of(newTask).pipe(delay(500));
+  }
+
+  updateTask(id: number, updated: Omit<Task, 'id'>): Observable<void> {
+    const tasks = this.tasks;
+    const index = tasks.findIndex(t => t.id === id);
+
+    if (index !== -1) {
+      tasks[index] = { id, ...updated };
+      this.saveTasks(tasks);
     }
-    createTask(task: Omit<Task, 'id'>): Observable<Task> {
-        const newTask: Task = {
-          id: this.idCounter++,
-          title: task.title!,
-          description: task.description || '',
-          status: task.status || 'todo'
-        };
-    
-        this.tasks.push(newTask);
-    
-        return of(newTask).pipe(delay(800)); // simulate API call
-      }
 
+    return of(void 0).pipe(delay(500));
+  }
 
-      getTaskById(id:number):Observable<Task |undefined>{
-        const task=this.tasks.find(t=>t.id===id);
-        return of(task).pipe(delay(500));
-      }
+  deleteTask(id: number): Observable<void> {
+    const tasks = this.tasks;
+    const index = tasks.findIndex(task => task.id === id);
 
-      updateTask(id:number,updated:Omit<Task,'id'>):Observable<void>{
-        const index=this.tasks.findIndex(t=>t.id===id);
-        if(index!==-1){
-            this.tasks[index]={id,...updated};
-        }
-        return of(void 0).pipe(delay(500));
-      }
-    
+    if (index === -1) {
+      return throwError(() => new Error('Task not Found'));
+    }
 
-      deleteTask(id:number):Observable<void>{
-        const index=this.tasks.findIndex(task=>task.id===id);
-        if(index===-1){
-            return throwError(()=>new Error('Task not Found'));
-        }
+    tasks.splice(index, 1);
+    this.saveTasks(tasks);
 
-        this.tasks.splice(index,1);
+    return of(void 0).pipe(delay(500));
+  }
 
-        return of (void 0).pipe(delay(500));
-      }
+  getTaskById(id: number): Observable<Task | undefined> {
+    const task = this.tasks.find(t => t.id === id);
+    return of(task).pipe(delay(500));
+  }
 }
