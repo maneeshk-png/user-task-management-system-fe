@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Task } from "../models/task.model";
-import { delay, Observable, of } from "rxjs";
+import { delay, Observable, of, throwError } from "rxjs";
 
 @Injectable({
     providedIn:'root'
@@ -45,4 +45,15 @@ export class TaskService {
         return of(void 0).pipe(delay(500));
       }
     
+
+      deleteTask(id:number):Observable<void>{
+        const index=this.tasks.findIndex(task=>task.id===id);
+        if(index===-1){
+            return throwError(()=>new Error('Task not Found'));
+        }
+
+        this.tasks.splice(index,1);
+
+        return of (void 0).pipe(delay(500));
+      }
 }
