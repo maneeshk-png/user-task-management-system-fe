@@ -3,11 +3,12 @@ import { TaskService } from "../../core/services/task.service";
 import { AuthService } from "../../core/services/auth.service";
 import { Task } from "../../core/models/task.model";
 import { CommonModule } from "@angular/common";
+import { RouterLink } from "@angular/router";
 
 @Component({
     selector: 'app-dashboard',
     standalone:true,
-    imports:[CommonModule],
+    imports:[CommonModule,RouterLink],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css']
 })

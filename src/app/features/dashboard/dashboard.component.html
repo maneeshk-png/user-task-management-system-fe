@@ -13,8 +13,9 @@
     <div *ngIf="!loading && !error">
   
       <!-- Empty State -->
-      <div *ngIf="total === 0" class="status-message">
-        No tasks available. Please create a task.
+      <div *ngIf="total === 0" class="empty-state">
+        <p>No tasks available. Please create a task.</p>
+        <button class="create-btn" routerLink="/task/create">+ Create Task</button>
       </div>
   
       <!-- Summary Cards -->

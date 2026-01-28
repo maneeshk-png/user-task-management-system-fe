@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { delay, map, Observable, of } from "rxjs";
 import { User } from "../models/user.model";
 import { getActiveConsumer } from "@angular/core/primitives/signals";
+import { StorageService } from "./storage.service";
 
 @Injectable({
     providedIn:'root'
@@ -10,7 +11,7 @@ import { getActiveConsumer } from "@angular/core/primitives/signals";
 export class AuthService {
     private dummyUser={id:1,username:'maneesh',password:'maneesh123'};
 
-    constructor(){}
+    constructor(private storage:StorageService){}
 
 //login logic by using observable
 
@@ -19,8 +20,10 @@ export class AuthService {
             delay(1000),
         map(user=>{
             if(username=== user.username && password=== user.password){
-                localStorage.setItem('user',JSON.stringify({id:user.id,username:user.username}))
-            return {id:user.id,username:user.username}
+
+                const safeUser={id:user.id,username:user.username};
+                this.storage.setItem('user',safeUser);
+            return safeUser;
             }else{
                 return null;
             }
@@ -30,14 +33,13 @@ export class AuthService {
 
     //while logout it will remove the usr details from localstorage
     logout():void {
-        localStorage.removeItem('user');
+        this.storage.removeItem('user');
     }
 
 
     //function used to get the users from localStorage
     getUser():User | null{
-        const userStr=localStorage.getItem('user');
-        return userStr?JSON.parse(userStr):null;
+        return this.storage.getItem<User>('user');
     }
 
     //!! used for converting into boolean
