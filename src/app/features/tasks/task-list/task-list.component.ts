@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Task } from "../../../core/models/task.model";
 import { TaskService } from "../../../core/services/task.service";
 import { CommonModule } from "@angular/common";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
     selector:'app-task-list',
@@ -17,7 +17,7 @@ export class TaskListComponent implements OnInit{
     loading=true;
     error=false;
 
-    constructor(private taskService:TaskService){}
+    constructor(private taskService:TaskService , private router:Router){}
 
     ngOnInit():void {
         this.loadTasks();
@@ -40,4 +40,9 @@ export class TaskListComponent implements OnInit{
             }
         })
     }
+
+    editTask(id:number){
+        this.router.navigate(['/task/edit',id]);
+    }
+
 }

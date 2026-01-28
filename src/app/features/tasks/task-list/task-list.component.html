@@ -34,8 +34,9 @@
             <span [ngClass]="task.status">{{ task.status }}</span>
           </td>
           <td>
-            <!-- <button (click)="editTask(task.id)" class="edit-btn">Edit</button> -->
-            <!-- <button (click)="deleteTask(task.id)" class="delete-btn">Delete</button> -->
+            <button (click)="editTask(task.id)" class="edit-btn">Edit</button> 
+           <button  class="delete-btn">Delete</button>
+           <!--(click)="" deleteTask(task.id) -->
           </td>
         </tr>
       </tbody>
