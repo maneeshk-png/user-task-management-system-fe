@@ -1,0 +1,55 @@
+/* Container to allow scrolling on small screens */
+.table-container {
+    overflow-x: auto;
+    width: 100%;
+    margin-top: 20px;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* Table styling */
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse; /* Merge borders */
+    min-width: 600px; /* Optional: ensures table doesn’t shrink too small */
+  }
+  
+  /* Table header */
+  .table-container thead th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 600;
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+  }
+  
+  /* Table body cells */
+  .table-container tbody td {
+    padding: 12px 15px;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+  }
+  
+  /* Zebra striping */
+  .table-container tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+  }
+  
+  /* Hover effect */
+  .table-container tbody tr:hover {
+    background-color: #f1f5f9;
+  }
+  
+  /* Style the action buttons */
+  .table-container td app-button {
+    margin-right: 8px; /* Space between buttons */
+  }
+  
+  /* Responsive messages */
+  .table-container p {
+    padding: 12px;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+  }
+  

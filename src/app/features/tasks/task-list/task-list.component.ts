@@ -1,74 +1,77 @@
 import { Component, OnInit } from "@angular/core";
-import { Task } from "../../../core/models/task.model";
-import { TaskService } from "../../../core/services/task.service";
 import { CommonModule } from "@angular/common";
 import { Router, RouterLink } from "@angular/router";
+
+import { Task } from "../../../core/models/task.model";
+import { TaskService } from "../../../core/services/task.service";
+
 import { ButtonComponent } from "../../../shared/components/button/buttton.component";
+import { TableComponent, TableColumn } from "../../../shared/components/table/table.component";
 
 @Component({
-    selector:'app-task-list',
-    standalone:true,
-    imports:[CommonModule,RouterLink,ButtonComponent],
-    templateUrl:'./task-list.component.html',
-    styleUrls:['./task-list.component.css']
+  selector: 'app-task-list',
+  standalone: true,
+  imports: [CommonModule, RouterLink, ButtonComponent, TableComponent],
+  templateUrl: './task-list.component.html',
+  styleUrls: ['./task-list.component.css']
 })
+export class TaskListComponent implements OnInit {
 
-export class TaskListComponent implements OnInit{
-    tasks:Task[]=[];
-    loading=true;
-    error=false;
-    successMessage='';
+  tasks: Task[] = [];
 
-    constructor(private taskService:TaskService , private router:Router){}
+  // 🔥 Column config for reusable table
+  columns: TableColumn<Task>[] = [
+    { key: 'title', label: 'Title' },
+    { key: 'description', label: 'Description' },
+    { key: 'status', label: 'Status' }
+  ];
 
-    ngOnInit():void {
-        this.loadTasks();
-    }
+  loading = true;
+  error = false;
+  successMessage = '';
 
+  constructor(
+    private taskService: TaskService,
+    private router: Router
+  ) {}
 
+  ngOnInit(): void {
+    this.loadTasks();
+  }
 
-    loadTasks(){
-        this.loading=true;
-        this.error=false;
-        this.successMessage='';
+  private loadTasks(): void {
+    this.loading = true;
+    this.error = false;
 
-        this.taskService.getTasks().subscribe({
-            next:(data)=>{
-                this.tasks=data;
-                this.loading=false;
-            },
-            error:()=>{
-                this.error=true;
-                this.loading=false;
-            }
-        })
-    }
+    this.taskService.getTasks().subscribe({
+      next: (data) => {
+        this.tasks = data;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = true;
+        this.loading = false;
+      }
+    });
+  }
 
-    editTask(id:number){
-        this.router.navigate(['/task/edit',id]);
-    }
+  // 🟢 Called from reusable table
+  onEdit(task: Task): void {
+    this.router.navigate(['/task/edit', task.id]);
+  }
 
-    deleteTask(id:number){
-        const confirmDelete=confirm("Are you Sure? ,Want to delete this Task?");
+  // 🔴 Called from reusable table
+  onDelete(task: Task): void {
+    const confirmDelete = confirm("Are you sure you want to delete this task?");
+    if (!confirmDelete) return;
 
-        if(!confirmDelete) return;
-        
-        this.taskService.deleteTask(id).subscribe({
-            next:()=>{
-
-                this.loading=false;
-                this.tasks = this.tasks.filter(task => task.id !== id);
-                this.successMessage='Task Deleted Sucessfully';
-                    setTimeout(()=>{
-                        this.successMessage='';
-                        this.router.navigate(['/task']);
-                    },1200);
-            },
-
-            error:()=>{
-                this.error=true;
-            }
-        })
-    }
-
+    this.taskService.deleteTask(task.id).subscribe({
+      next: () => {
+        this.tasks = this.tasks.filter(t => t.id !== task.id);
+        this.successMessage = "Task deleted successfully";
+        setTimeout(() => this.successMessage = '', 1500);
+      },
+      error: () => this.error = true
+    });
+  }
 }

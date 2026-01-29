@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ButtonComponent } from '../button/buttton.component';
+
 
 export interface FormField {
   name: string;
@@ -15,7 +17,7 @@ export interface FormField {
 @Component({
   selector: 'app-dynamic-form',
   standalone:true,
-  imports:[ReactiveFormsModule,CommonModule],
+  imports:[ReactiveFormsModule,CommonModule,ButtonComponent],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.css']
 })

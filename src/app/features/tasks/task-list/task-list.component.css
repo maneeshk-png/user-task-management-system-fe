@@ -1,67 +1,17 @@
-.task-container {
-    padding: 20px;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .create-btn {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .create-btn:hover {
-    background-color: #1d4ed8;
-  }
-  
-  .task-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .task-table th, .task-table td {
-    border: 1px solid #e2e8f0;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  
-  
-  
-  .error {
-    color: red;
-  }
-  
-  .empty {
-    text-align: center;
-    font-style: italic;
-  }
-  
-  .todo {
-    color: #f59e0b;
-    font-weight: bold;
-  }
-  
-  
-  .done {
-    color: #22c55e;
-    font-weight: bold;
-  }
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  margin-top: 25px;
+  padding: 10px;
+}
 
-  .success{
-    color: #095a27;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: 500;
-  }
-  
+.empty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  font-size: 25px;
+  color: rgb(26, 119, 26);
+  font-weight: 900;
+}
