@@ -1,50 +1,37 @@
 <div class="task-container">
-    <!-- Header -->
-    <div class="header">
-      <h2>Task List</h2>
-      <app-button  variant="secondary" routerLink="/task/create" label="+ Create Task"></app-button>
-    </div>
-  
-    <!-- Loading State -->
-    <p *ngIf="loading">Loading tasks...</p>
-  
-    <!-- Error State -->
-    <p *ngIf="error" class="error">Something went wrong while deleting task</p>
-  
-    <!-- Empty State -->
-    <div *ngIf="!loading && !error && tasks.length === 0" class="empty">
-      <p>No tasks available. Please create a task.</p>
-    </div>
 
-
-    <!-- sucess Message -->
-    <p *ngIf="successMessage" class="success">{{successMessage}}</p>
-
-
-
-    <!-- Task Table -->
-    <table *ngIf="!successMessage && !error && tasks.length > 0" class="task-table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Status</th>
-          <th>Actions</th> <!-- For edit/delete -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let task of tasks">
-          <td>{{ task.title }}</td>
-          <td>{{ task.description }}</td>
-          <td>
-            <span [ngClass]="task.status">{{ task.status }}</span>
-          </td>
-          <td>
-            <app-button (click)="editTask(task.id)"  variant="primary" class="btn" label="Edit"></app-button>
-           <app-button  (click)="deleteTask(task.id)"  variant="danger" class="btn" label="Delete"></app-button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Header -->
+  <div class="header">
+    <h2>Task List</h2>
+    <app-button
+      variant="secondary"
+      routerLink="/task/create"
+      label="+ Create Task">
+    </app-button>
   </div>
-  
+
+  <!-- Loading -->
+  <p *ngIf="loading">Loading tasks...</p>
+
+  <!-- Error -->
+  <p *ngIf="error" class="error">Something went wrong.</p>
+
+  <!-- Success -->
+  <p *ngIf="successMessage" class="success">{{ successMessage }}</p>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && tasks.length === 0" class="empty">
+    No tasks available. Please create a task.
+  </div>
+
+  <!-- Reusable Table -->
+  <app-table
+    *ngIf="!loading && tasks.length > 0"
+    [data]="tasks"
+    [columns]="columns"
+    [loading]="loading"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)">
+  </app-table>
+
+</div>

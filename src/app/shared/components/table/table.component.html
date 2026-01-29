@@ -1,0 +1,25 @@
+<div class="table-container">
+    <table *ngIf="data.length > 0; else noData">
+      <thead>
+        <tr>
+          <th *ngFor="let col of columns">{{ col.label }}</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of data">
+          <td *ngFor="let col of columns">{{ row[col.key] }}</td>
+          <td>
+            <app-button variant="secondary" (click)="edit.emit(row)" [label]="'Edit'"></app-button>
+            <app-button variant="danger" (click)="delete.emit(row)" [label]="'Delete'"></app-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <ng-template #noData>
+      <p *ngIf="!loading">No data available.</p>
+      <p *ngIf="loading">Loading...</p>
+    </ng-template>
+  </div>
+  

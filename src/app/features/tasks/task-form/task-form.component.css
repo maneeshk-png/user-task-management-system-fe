@@ -1,46 +1,46 @@
 .task-form-container {
-    max-width: 500px;
-    margin: 30px auto;
-    padding: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  input, textarea, select {
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-  
-  button {
-    padding: 10px;
-    background: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 6px;
-  }
-  
-  .error {
-    color: red;
-    font-size: 12px;
-  }
-  
-  .success {
-    color: green;
-  }
-  
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+input, textarea, select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.success {
+  color: green;
+}
 
 
-  .error-page{
-    height: 60vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    font-weight:500;
-    color: #b91c1c;
-  }
+
+.error-page{
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight:500;
+  color: #b91c1c;
+}

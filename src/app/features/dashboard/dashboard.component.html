@@ -21,33 +21,12 @@
       <!-- Summary Cards -->
       <div *ngIf="total > 0" class="summary-grid">
         
-        <!-- Total Tasks -->
-        <div class="card">
-          <h3>Total Tasks</h3>
-          <p>{{ total }}</p>
-          <span class="description">Count of all tasks</span>
-        </div>
-  
-        <!-- Todo Tasks -->
-        <div class="card">
-          <h3>Todo</h3>
-          <p>{{ todo }}</p>
-          <span class="description">Tasks with status todo</span>
-        </div>
-  
-        <!-- In Progress Tasks -->
-        <div class="card">
-          <h3>In Progress</h3>
-          <p>{{ inProgress }}</p>
-          <span class="description">Tasks with status in-progress</span>
-        </div>
-  
-        <!-- Done Tasks -->
-        <div class="card">
-          <h3>Done</h3>
-          <p>{{ done }}</p>
-          <span class="description">Tasks with status done</span>
-        </div>
+        <app-summary-card 
+        *ngFor="let card of summaryCards"
+        [title]="card.title"
+        [value]="card.value"
+        [description]="card.description">
+        </app-summary-card>
   
       </div>
     </div>
