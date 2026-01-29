@@ -1,28 +1,16 @@
 <div class="page-wrapper">
-    <div class="login-card">
-      <h2>Welcome Back 👋</h2>
-      <p class="subtitle">Login to continue</p>
-  
-      <form [formGroup]="loginForm" (ngSubmit)="submit()">
-        <div class="form-group">
-          <label>Username</label>
-          <input type="text" formControlName="username" placeholder="Enter username">
-          <div class="error" *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid">
-            Username is required
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" formControlName="password" placeholder="Enter password">
-          <div class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
-            Password is required
-          </div>
-        </div>
-        <div class="error server-error" *ngIf="errorMsg">{{ errorMsg }}</div>
-        <app-button type="submit" variant="none" [disabled]="loading" [label]="loading ? 'Logging in...' : 'Login' ">
-        </app-button>
-      </form>
-    </div>
+  <div class="login-card">
+    <h2>Welcome Back 👋</h2>
+    <p class="subtitle">Login to continue</p>
+
+    <div class="error server-error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <app-dynamic-form
+      [fields]="fields"
+      [initialData]="initialData"
+      [loading]="loading"
+      submitLabel="Login"
+      (submitForm)="onLogin($event)">
+    </app-dynamic-form>
   </div>
-  
+</div>

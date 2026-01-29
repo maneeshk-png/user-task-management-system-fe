@@ -1,53 +1,34 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 import { AuthService } from "../../../core/services/auth.service";
-import { Router, RouterOutlet } from "@angular/router";
-import { CommonModule } from "@angular/common";
+import { LoginFormConfig } from '../../../configs/forms-config';
+import { DynamicFormComponent } from "../../../shared/components/dynamic-form/dynamic-form.component";
 import { ButtonComponent } from "../../../shared/components/button/buttton.component";
 
-
 @Component({
-    selector:'app-login',
-    standalone:true,
-    imports:[ReactiveFormsModule,CommonModule,ButtonComponent],
-    templateUrl:'./login.component.html',
-    styleUrls:['./login.component.css']
+  selector:'app-login',
+  standalone:true,
+  imports:[DynamicFormComponent,ButtonComponent],
+  templateUrl:'./login.component.html',
+  styleUrls:['./login.component.css']
 })
+export class LoginComponent {
+  fields = LoginFormConfig;
+  initialData = {};
+  loading = false;
+  errorMsg = '';
 
+  constructor(private authService: AuthService, private router: Router) {}
 
-export class LoginComponent implements OnInit {
-    loginForm!:FormGroup;
-    loading=false;
-    errorMsg='';
+  onLogin(data: any) {
+    this.loading = true;
+    this.errorMsg = '';
+    const { username, password } = data;
 
-    constructor(private fb:FormBuilder,private authService:AuthService,private router:Router){}
-
-    ngOnInit(): void {
-        this.loginForm = this.fb.group({
-          username: ['', Validators.required],
-          password: ['', Validators.required]
-        });
-        if (this.authService.isLoggedIn()) {
-          this.router.navigate(['/dashboard']); // redirect already logged-in users
-        }
-      }
-      submit(): void {
-        if (this.loginForm.invalid) {
-          return;
-        }
-        this.loading=true;
-        this.errorMsg='';
-
-        const {username,password}=this.loginForm.value;
-
-        this.authService.login(username,password).subscribe(user=>{
-            this.loading=false;
-
-            if(user){
-                this.router.navigate(['/dashboard']);
-            }else{
-                this.errorMsg='Invalid username or password'
-            }
-        })
-}
+    this.authService.login(username, password).subscribe(user => {
+      this.loading = false;
+      if(user) this.router.navigate(['/dashboard']);
+      else this.errorMsg = 'Invalid username or password';
+    });
+  }
 }
