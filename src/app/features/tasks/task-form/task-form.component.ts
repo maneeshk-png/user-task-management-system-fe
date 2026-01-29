@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TaskService } from '../../../core/services/task.service';
 import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '../../../shared/components/button/buttton.component';
 
 @Component({
   selector: 'app-task-form',
   standalone:true,
-  imports:[RouterLink,CommonModule,ReactiveFormsModule],
+  imports:[RouterLink,CommonModule,ReactiveFormsModule,ButtonComponent],
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
@@ -67,6 +68,8 @@ ngOnInit(){
 }
 
   submit() {
+
+    if(this.loading) return;
     if (this.taskForm.invalid) return;
 
     this.loading = true;
@@ -97,6 +100,8 @@ ngOnInit(){
     this.taskService.createTask(newTask).subscribe({
       next: () => {
         this.successMessage = 'Task created successfully!';
+        this.taskForm.reset();
+        this.loading=false;
         setTimeout(() => {
           this.router.navigate(['/task']);
         }, 800);

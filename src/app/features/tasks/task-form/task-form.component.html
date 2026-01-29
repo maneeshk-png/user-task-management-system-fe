@@ -32,11 +32,10 @@
       </div>
 
       
-      <h2>{{isEditMode ? 'Edit Task':'Create Task'}}</h2>
+      <!-- <h2>{{isEditMode ? 'Edit Task':'Create Task'}}</h2> -->
       
-      <button type="submit" [disabled]="taskForm.invalid || loading">
-        {{isEditMode ? 'Update Task':'Create Task'}}
-      </button>
+      <app-button type="submit" [disabled]="taskForm.invalid || loading" variant="secondary" [label]="isEditMode ? 'Update Task':'Create Task'">
+      </app-button>
       
       <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
       <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>

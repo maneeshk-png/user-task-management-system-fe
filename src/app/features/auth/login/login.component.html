@@ -20,9 +20,8 @@
           </div>
         </div>
         <div class="error server-error" *ngIf="errorMsg">{{ errorMsg }}</div>
-        <button type="submit" [disabled]="loading">
-          {{ loading ? 'Logging in...' : 'Login' }}
-        </button>
+        <app-button type="submit" variant="none" [disabled]="loading" [label]="loading ? 'Logging in...' : 'Login' ">
+        </app-button>
       </form>
     </div>
   </div>

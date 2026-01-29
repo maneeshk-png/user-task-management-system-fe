@@ -2,7 +2,7 @@
     <!-- Header -->
     <div class="header">
       <h2>Task List</h2>
-      <button routerLink="/task/create" class="create-btn">+ Create Task</button>
+      <app-button  variant="secondary" routerLink="/task/create" label="+ Create Task"></app-button>
     </div>
   
     <!-- Loading State -->
@@ -40,8 +40,8 @@
             <span [ngClass]="task.status">{{ task.status }}</span>
           </td>
           <td>
-            <button (click)="editTask(task.id)" class="edit-btn">Edit</button> 
-           <button  (click)="deleteTask(task.id)" class="delete-btn">Delete</button>
+            <app-button (click)="editTask(task.id)"  variant="primary" class="btn" label="Edit"></app-button>
+           <app-button  (click)="deleteTask(task.id)"  variant="danger" class="btn" label="Delete"></app-button>
           </td>
         </tr>
       </tbody>

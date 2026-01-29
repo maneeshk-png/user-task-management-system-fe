@@ -15,7 +15,7 @@
       <!-- Empty State -->
       <div *ngIf="total === 0" class="empty-state">
         <p>No tasks available. Please create a task.</p>
-        <button class="create-btn" routerLink="/task/create">+ Create Task</button>
+        <app-button  variant="create-task" routerLink="/task/create"  label="+ Create Task"></app-button>
       </div>
   
       <!-- Summary Cards -->
