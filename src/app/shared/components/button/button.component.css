@@ -1,0 +1,33 @@
+button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    margin-right: 12px;
+  }
+  
+  .primary {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .danger {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .secondary {
+    background-color: #008CBA;
+    color: white;
+  }
+  
+  .create-task{
+    background-color: #008CBA;
+    color: white;
+    margin-top: 10px;
+  }
+  .none{
+    background-color: transparent;
+    color: white;
+    font-size: 0.9rem;
+  }
