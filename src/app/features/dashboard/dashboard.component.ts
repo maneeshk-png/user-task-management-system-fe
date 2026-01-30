@@ -3,7 +3,7 @@ import { TaskService } from "../../core/services/task.service";
 import { AuthService } from "../../core/services/auth.service";
 import { Task } from "../../core/models/task.model";
 import { CommonModule } from "@angular/common";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { ButtonComponent } from "../../shared/components/button/buttton.component";
 import { SummaryCardComponent } from "../../shared/components/summary-card/summary-card.component";
 
@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
     inProgress=0;
     done=0;
 
-    constructor(private taskService:TaskService, private authservice:AuthService){}
+    constructor(private taskService:TaskService, private authservice:AuthService,private router:Router){}
 
 
     ngOnInit():void {
@@ -34,6 +34,11 @@ export class DashboardComponent implements OnInit {
         this.username=user?.username || '';
 
         this.loadTasks();
+        if(this.authservice.isLoggedIn()){
+          this.router.navigate(['/dashboard']);
+        }
+
+
     }
 
     get summaryCards() {
