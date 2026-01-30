@@ -1,0 +1,24 @@
+.search-box {
+    position: relative;
+    display: inline-block;
+    width: 200px; /* can make it flexible with @Input later */
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 6px 30px 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #999;
+    pointer-events: none;
+  }
+  

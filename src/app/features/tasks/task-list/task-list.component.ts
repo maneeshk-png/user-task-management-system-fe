@@ -10,11 +10,12 @@ import { TableComponent, TableColumn } from "../../../shared/components/table/ta
 import { FilterDropdownComponent } from "../../../shared/components/filter-dropdown/filter-dropdown.component";
 import { STATUS_FILTER_OPTIONS } from "../../../configs/filter-options.config";
 import { FormsModule } from "@angular/forms";
+import { SearchInputComponent } from "../../../shared/components/search-input/search-input.component";
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonComponent, TableComponent,FilterDropdownComponent,FormsModule],
+  imports: [CommonModule, RouterLink, ButtonComponent, TableComponent,FilterDropdownComponent,FormsModule,SearchInputComponent],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
@@ -63,7 +64,19 @@ export class TaskListComponent implements OnInit {
       }
     });
   }
-  
+
+  // on search login
+
+  onSearch(query:string){
+    query=query.toLowerCase();
+
+    this.filteredTasks=this.tasks.filter(task=>
+      task.title.toLowerCase().includes(query) ||
+      task.description.toLowerCase().includes(query)
+    );
+  }
+
+
   onFilterChange(status:string){
     if(status==='all' || !status){
       this.filteredTasks=this.tasks;

@@ -15,6 +15,11 @@
   </div>
 
 <!-- Right side -->
+ <app-search-input 
+ placeholder="Search tasks...." 
+ (search)="onSearch($event)"
+ >
+ </app-search-input>
     <app-button
       variant="secondary"
       routerLink="/task/create"
