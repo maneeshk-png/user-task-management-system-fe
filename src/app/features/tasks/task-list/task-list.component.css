@@ -6,6 +6,23 @@
   padding: 10px;
 }
 
+/* lft group: title and filter */
+.header-left{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+
+/* Title */
+
+.header h2{
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
 .empty{
   display: flex;
   justify-content: center;
@@ -15,3 +32,11 @@
   color: rgb(26, 119, 26);
   font-weight: 900;
 }
+
+.status-dropdown{
+  border: 2px solid black;
+  padding: 5px;
+  background-color:rgb(255, 255, 255);
+}
+
+

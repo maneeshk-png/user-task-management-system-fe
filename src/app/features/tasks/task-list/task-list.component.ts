@@ -7,19 +7,26 @@ import { TaskService } from "../../../core/services/task.service";
 
 import { ButtonComponent } from "../../../shared/components/button/buttton.component";
 import { TableComponent, TableColumn } from "../../../shared/components/table/table.component";
+import { FilterDropdownComponent } from "../../../shared/components/filter-dropdown/filter-dropdown.component";
+import { STATUS_FILTER_OPTIONS } from "../../../configs/filter-options.config";
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonComponent, TableComponent],
+  imports: [CommonModule, RouterLink, ButtonComponent, TableComponent,FilterDropdownComponent,FormsModule],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
 
-  tasks: Task[] = [];
+  tasks: Task[] = [];//all task from API
+  filteredTasks:Task[]=[];
+  
+  statusOptions=STATUS_FILTER_OPTIONS;
 
-  // 🔥 Column config for reusable table
+
+  //  Column config for reusable table
   columns: TableColumn<Task>[] = [
     { key: 'title', label: 'Title' },
     { key: 'description', label: 'Description' },
@@ -36,7 +43,8 @@ export class TaskListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadTasks();
+    this.loadTasks(); //when reloads show all tasks
+
   }
 
   private loadTasks(): void {
@@ -46,6 +54,7 @@ export class TaskListComponent implements OnInit {
     this.taskService.getTasks().subscribe({
       next: (data) => {
         this.tasks = data;
+        this.filteredTasks=data;
         this.loading = false;
       },
       error: () => {
@@ -54,13 +63,23 @@ export class TaskListComponent implements OnInit {
       }
     });
   }
-
-  // 🟢 Called from reusable table
+  
+  onFilterChange(status:string){
+    if(status==='all' || !status){
+      this.filteredTasks=this.tasks;
+    }else{
+      this.filteredTasks=this.tasks.filter(
+        task=>task.status===status
+      )
+    }
+  }
+  
+  //  Called from reusable table
   onEdit(task: Task): void {
     this.router.navigate(['/task/edit', task.id]);
   }
 
-  // 🔴 Called from reusable table
+  //  Called from reusable table
   onDelete(task: Task): void {
     const confirmDelete = confirm("Are you sure you want to delete this task?");
     if (!confirmDelete) return;

@@ -1,0 +1,13 @@
+.filter-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-dropdown{
+    border-radius: 10px;
+    color: black;
+    border: 2px solid black;
+    font-size: 1.1rem;
+}

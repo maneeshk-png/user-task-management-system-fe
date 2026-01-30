@@ -1,0 +1,12 @@
+<div class="filter-box">
+
+    <select 
+    [(ngModel)]="selectedValue"
+    (change)="onSelect(selectedValue)"
+    class="filter-dropdown"
+    >
+
+    <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option>
+</select>
+
+</div>

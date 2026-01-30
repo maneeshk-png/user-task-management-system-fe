@@ -2,7 +2,19 @@
 
   <!-- Header -->
   <div class="header">
-    <h2>Task List</h2>
+
+    <!-- Left Side -->
+     <div class="header-left">
+       <h2>Task List</h2>
+
+       <app-filter-dropdown
+        label="Status"
+         [options]="statusOptions"
+         (selectionChange)="onFilterChange($event)" >
+        </app-filter-dropdown>
+  </div>
+
+<!-- Right side -->
     <app-button
       variant="secondary"
       routerLink="/task/create"
@@ -27,7 +39,7 @@
   <!-- Reusable Table -->
   <app-table
     *ngIf="!loading && tasks.length > 0"
-    [data]="tasks"
+    [data]="filteredTasks"
     [columns]="columns"
     [loading]="loading"
     (edit)="onEdit($event)"
