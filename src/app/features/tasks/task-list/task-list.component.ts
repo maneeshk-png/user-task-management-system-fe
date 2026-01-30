@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Router, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 
 import { Task } from "../../../core/models/task.model";
 import { TaskService } from "../../../core/services/task.service";
@@ -40,15 +40,20 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private router: Router
+    private router: Router,
+    private route:ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.loadTasks(); //when reloads show all tasks
+    this.route.queryParams.subscribe(params=>{
+      const statusFromUrl=params['status'];
+      this.loadTasks(statusFromUrl);
+    })
+    //this.loadTasks(); //when reloads show all tasks
 
   }
 
-  private loadTasks(): void {
+  private loadTasks(statusFilter?:string): void {
     this.loading = true;
     this.error = false;
 
@@ -57,6 +62,12 @@ export class TaskListComponent implements OnInit {
         this.tasks = data;
         this.filteredTasks=data;
         this.loading = false;
+
+        if(statusFilter && statusFilter!=='all'){
+          this.filteredTasks=this.tasks.filter(task=>task.status===statusFilter)
+        }else{
+          this.filteredTasks=this.tasks;
+        }
       },
       error: () => {
         this.error = true;
