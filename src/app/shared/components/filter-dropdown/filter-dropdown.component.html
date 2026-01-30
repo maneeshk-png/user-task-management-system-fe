@@ -2,7 +2,7 @@
 
     <select 
     [(ngModel)]="selectedValue"
-    (change)="onSelect(selectedValue)"
+    (ngModelChange)="onSelect(selectedValue)"
     class="filter-dropdown"
     >
 

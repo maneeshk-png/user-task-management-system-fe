@@ -23,6 +23,8 @@ export class TaskListComponent implements OnInit {
 
   tasks: Task[] = [];//all task from API
   filteredTasks:Task[]=[];
+
+  selectedStatus:string='all';
   
   statusOptions=STATUS_FILTER_OPTIONS;
 
@@ -46,7 +48,9 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params=>{
-      const statusFromUrl=params['status'];
+      const statusFromUrl=params['status'] || 'all';
+
+      this.selectedStatus=statusFromUrl;
       this.loadTasks(statusFromUrl);
     })
     //this.loadTasks(); //when reloads show all tasks
@@ -89,6 +93,7 @@ export class TaskListComponent implements OnInit {
 
 
   onFilterChange(status:string){
+    this.selectedStatus=status;
     if(status==='all' || !status){
       this.filteredTasks=this.tasks;
     }else{
