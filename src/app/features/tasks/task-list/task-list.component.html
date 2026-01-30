@@ -45,11 +45,19 @@
   <!-- Reusable Table -->
   <app-table
     *ngIf="!loading && tasks.length > 0"
-    [data]="filteredTasks"
+    [data]="paginatedTasks"
     [columns]="columns"
     [loading]="loading"
     (edit)="onEdit($event)"
     (delete)="onDelete($event)">
   </app-table>
+
+  <app-pagination *ngIf="!loading && filteredTasks.length > 0"
+  [totalItems]="filteredTasks.length"
+  [pageSize]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)"
+  ></app-pagination>
+
 
 </div>

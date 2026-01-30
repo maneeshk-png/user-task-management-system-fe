@@ -8,7 +8,7 @@ import { ButtonComponent } from "../../../shared/components/button/buttton.compo
 @Component({
   selector:'app-login',
   standalone:true,
-  imports:[DynamicFormComponent,ButtonComponent],
+  imports:[DynamicFormComponent],
   templateUrl:'./login.component.html',
   styleUrls:['./login.component.css']
 })
@@ -19,6 +19,17 @@ export class LoginComponent {
   errorMsg = '';
 
   constructor(private authService: AuthService, private router: Router) {}
+
+
+
+  canActivate():boolean {
+    if(this.authService.isLoggedIn()){
+      this.router.navigate(['/dashboard']);
+      return false;
+    }
+    return true;
+  }
+
 
   onLogin(data: any) {
     this.loading = true;

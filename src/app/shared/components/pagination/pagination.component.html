@@ -1,0 +1,29 @@
+<div class="pagination" *ngIf="totalPages > 1">
+
+    <!-- Prev Button -->
+    <app-button
+      label="Prev"
+      variant="secondary"
+      [disabled]="currentPage === 1"
+      (click)="prev()">
+    </app-button>
+  
+    <!-- Page Numbers -->
+    <app-button
+      *ngFor="let page of pages"
+      [label]="page.toString()"
+      [variant]="page === currentPage ? 'primary' : 'secondary'"
+      [disabled]="page === '...'"   
+      (click)="changePage(page)">
+    </app-button>
+  
+    <!-- Next Button -->
+    <app-button
+      label="Next"
+      variant="secondary"
+      [disabled]="currentPage === totalPages"
+      (click)="next()">
+    </app-button>
+  
+  </div>
+  
