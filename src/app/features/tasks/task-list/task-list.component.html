@@ -45,7 +45,7 @@
   <!-- Reusable Table -->
   <app-table
     *ngIf="!loading && tasks.length > 0"
-    [data]="paginatedTasks"
+    [data]="displayTasks"
     [columns]="columns"
     [loading]="loading"
     (edit)="onEdit($event)"
