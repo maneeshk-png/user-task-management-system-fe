@@ -25,7 +25,9 @@
         *ngFor="let card of summaryCards"
         [title]="card.title"
         [value]="card.value"
-        [description]="card.description">
+        [description]="card.description"
+        (cardClick)="goToTasks(card.status!)"
+        >
         </app-summary-card>
   
       </div>

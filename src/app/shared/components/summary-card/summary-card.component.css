@@ -30,3 +30,16 @@
     font-size: 12px;
     color: #64748b;
   }
+
+  .value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2196f3;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .value:hover {
+    color: #1976d2;
+  }
+  

@@ -1,0 +1,39 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+  }
+  
+  /* Make buttons consistent size */
+  .pagination app-button {
+    min-width: 38px;
+  }
+  
+  /* Active page button style */
+  .pagination app-button.active ::ng-deep button,
+  .pagination app-button[variant="primary"] ::ng-deep button {
+    font-weight: 600;
+    transform: scale(1.05);
+  }
+  
+  /* Disabled state spacing consistency */
+  .pagination app-button[disabled] {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  /* Smooth hover */
+  .pagination app-button ::ng-deep button {
+    transition: all 0.2s ease;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .pagination {
+      gap: 5px;
+    }
+  }
+  

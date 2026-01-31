@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Router, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 
 import { Task } from "../../../core/models/task.model";
 import { TaskService } from "../../../core/services/task.service";
@@ -10,11 +10,20 @@ import { TableComponent, TableColumn } from "../../../shared/components/table/ta
 import { FilterDropdownComponent } from "../../../shared/components/filter-dropdown/filter-dropdown.component";
 import { STATUS_FILTER_OPTIONS } from "../../../configs/filter-options.config";
 import { FormsModule } from "@angular/forms";
+import { SearchInputComponent } from "../../../shared/components/search-input/search-input.component";
+import { PaginationComponent } from "../../../shared/components/pagination/pagination.component";
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonComponent, TableComponent,FilterDropdownComponent,FormsModule],
+  imports: [CommonModule,
+     RouterLink,
+     ButtonComponent,
+     TableComponent,
+     FilterDropdownComponent,
+     FormsModule,
+     SearchInputComponent,
+     PaginationComponent],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
@@ -22,8 +31,16 @@ export class TaskListComponent implements OnInit {
 
   tasks: Task[] = [];//all task from API
   filteredTasks:Task[]=[];
+
+  selectedStatus:string='all';
   
   statusOptions=STATUS_FILTER_OPTIONS;
+
+
+  currentPage:number=1;
+  pageSize:number=10;
+  paginatedTasks:Task[]=[];
+
 
 
   //  Column config for reusable table
@@ -39,15 +56,22 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private router: Router
+    private router: Router,
+    private route:ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.loadTasks(); //when reloads show all tasks
+    this.route.queryParams.subscribe(params=>{
+      const statusFromUrl=params['status'] || 'all';
+
+      this.selectedStatus=statusFromUrl;
+      this.loadTasks(statusFromUrl);
+    })
+    //this.loadTasks(); //when reloads show all tasks
 
   }
 
-  private loadTasks(): void {
+  private loadTasks(statusFilter?:string): void {
     this.loading = true;
     this.error = false;
 
@@ -56,6 +80,14 @@ export class TaskListComponent implements OnInit {
         this.tasks = data;
         this.filteredTasks=data;
         this.loading = false;
+
+        if(statusFilter && statusFilter.toLowerCase()!=='all'){
+          this.filteredTasks=this.tasks.filter(task=>task.status.toLowerCase()===statusFilter.toLowerCase())
+        }else{
+          this.filteredTasks=[...this.tasks];
+        }
+          this.currentPage=1;
+          this.updatePagination();
       },
       error: () => {
         this.error = true;
@@ -63,15 +95,32 @@ export class TaskListComponent implements OnInit {
       }
     });
   }
-  
+
+  // on search login
+
+  onSearch(query:string){
+    query=query.toLowerCase();
+
+    this.filteredTasks=this.tasks.filter(task=>
+      task.title.toLowerCase().includes(query) ||
+      task.description.toLowerCase().includes(query)
+    );
+    this.currentPage=1;
+    this.updatePagination();
+  }
+
+
   onFilterChange(status:string){
-    if(status==='all' || !status){
-      this.filteredTasks=this.tasks;
+    this.selectedStatus=status;
+    if(status.toLowerCase()==='all' || !status){
+      this.filteredTasks=[...this.tasks];
     }else{
       this.filteredTasks=this.tasks.filter(
-        task=>task.status===status
+        task=>task.status.toLowerCase()===this.selectedStatus.toLowerCase()
       )
     }
+    this.currentPage=1;
+    this.updatePagination();
   }
   
   //  Called from reusable table
@@ -87,10 +136,25 @@ export class TaskListComponent implements OnInit {
     this.taskService.deleteTask(task.id).subscribe({
       next: () => {
         this.tasks = this.tasks.filter(t => t.id !== task.id);
+
+        this.updatePagination();
+
         this.successMessage = "Task deleted successfully";
         setTimeout(() => this.successMessage = '', 1500);
       },
       error: () => this.error = true
     });
+  }
+
+//pagination
+  updatePagination(){
+    const start=(this.currentPage-1)*this.pageSize;
+    const end=start + this.pageSize;
+    this.paginatedTasks=this.filteredTasks.slice(start,end);
+  }
+
+  onPageChange(page:number){
+    this.currentPage=page;
+    this.updatePagination();
   }
 }

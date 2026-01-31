@@ -18,10 +18,10 @@ export interface FilterOption {
 export class FilterDropdownComponent {
 
 
-    @Input() label:string='Filter';
+    @Input() label:string='';
     @Input() options:FilterOption[]=[];
     
-    selectedValue:string='';
+    @Input() selectedValue:string='All';
 
 
     @Output() selectionChange=new EventEmitter<string>();

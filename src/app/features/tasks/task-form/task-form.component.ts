@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { TaskService } from '../../../core/services/task.service';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../../shared/components/button/buttton.component';
@@ -8,7 +8,7 @@ import { ButtonComponent } from '../../../shared/components/button/buttton.compo
 @Component({
   selector: 'app-task-form',
   standalone:true,
-  imports:[RouterLink,CommonModule,ReactiveFormsModule,ButtonComponent],
+  imports:[CommonModule,ReactiveFormsModule,ButtonComponent],
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })

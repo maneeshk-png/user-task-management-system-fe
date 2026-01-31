@@ -44,10 +44,14 @@ export class DashboardComponent implements OnInit {
     get summaryCards() {
       return [
         { title: 'Total Tasks', value: this.total, description: 'Count of all tasks' },
-        { title: 'Todo', value: this.todo, description: 'Tasks with status todo' },
-        { title: 'In Progress', value: this.inProgress, description: 'Tasks with status in-progress' },
-        { title: 'Done', value: this.done, description: 'Tasks with status done' }
+        { title: 'Todo', value: this.todo, description: 'Tasks with status todo',status:'todo' },
+        { title: 'In Progress', value: this.inProgress, description: 'Tasks with',status:'in-progress' },
+        { title: 'Done', value: this.done, description: 'Tasks with status done', status:'done' }
       ];
+    }
+
+    goToTasks(status:string){      
+      this.router.navigate(['/task'],{queryParams:{status:status}});
     }
 
     loadTasks() {
