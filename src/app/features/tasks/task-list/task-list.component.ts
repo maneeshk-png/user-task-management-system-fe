@@ -16,78 +16,81 @@ import { PaginationComponent } from "../../../shared/components/pagination/pagin
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule,
-     RouterLink,
-     ButtonComponent,
-     TableComponent,
-     FilterDropdownComponent,
-     FormsModule,
-     SearchInputComponent,
-     PaginationComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    ButtonComponent,
+    TableComponent,
+    FilterDropdownComponent,
+    FormsModule,
+    SearchInputComponent,
+    PaginationComponent
+  ],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
 
-  tasks: Task[] = [];//all task from API
-  filteredTasks:Task[]=[];
+  // ===== DATA LAYERS =====
+  tasks: Task[] = [];          // all tasks from API
+  filteredTasks: Task[] = []; // after status filter
+  pageTasks: Task[] = [];     // current page only
+  displayTasks: Task[] = [];  // table display (search result)
 
-  selectedStatus:string='all';
-  
-  statusOptions=STATUS_FILTER_OPTIONS;
+  // ===== UI STATE =====
+  selectedStatus: string = 'all';
+  statusOptions = STATUS_FILTER_OPTIONS;
 
+  currentPage: number = 1;
+  pageSize: number = 10;
 
-  currentPage:number=1;
-  pageSize:number=10;
-  paginatedTasks:Task[]=[];
+  loading = true;
+  error = false;
+  successMessage = '';
 
-
-
-  //  Column config for reusable table
+  // ===== TABLE CONFIG =====
   columns: TableColumn<Task>[] = [
     { key: 'title', label: 'Title' },
     { key: 'description', label: 'Description' },
     { key: 'status', label: 'Status' }
   ];
 
-  loading = true;
-  error = false;
-  successMessage = '';
-
   constructor(
     private taskService: TaskService,
     private router: Router,
-    private route:ActivatedRoute
+    private route: ActivatedRoute
   ) {}
 
+  // ===== INIT =====
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params=>{
-      const statusFromUrl=params['status'] || 'all';
-
-      this.selectedStatus=statusFromUrl;
+    this.route.queryParams.subscribe(params => {
+      const statusFromUrl = params['status'] || 'all';
+      this.selectedStatus = statusFromUrl;
       this.loadTasks(statusFromUrl);
-    })
-    //this.loadTasks(); //when reloads show all tasks
-
+    });
   }
 
-  private loadTasks(statusFilter?:string): void {
+  // ===== LOAD TASKS =====
+  private loadTasks(statusFilter?: string): void {
     this.loading = true;
     this.error = false;
 
     this.taskService.getTasks().subscribe({
       next: (data) => {
         this.tasks = data;
-        this.filteredTasks=data;
-        this.loading = false;
 
-        if(statusFilter && statusFilter.toLowerCase()!=='all'){
-          this.filteredTasks=this.tasks.filter(task=>task.status.toLowerCase()===statusFilter.toLowerCase())
-        }else{
-          this.filteredTasks=[...this.tasks];
+        // apply status filter
+        if (statusFilter && statusFilter !== 'all') {
+          this.filteredTasks = this.tasks.filter(
+            task => task.status.toLowerCase() === statusFilter.toLowerCase()
+          );
+        } else {
+          this.filteredTasks = [...this.tasks];
         }
-          this.currentPage=1;
-          this.updatePagination();
+
+        this.currentPage = 1;
+        this.updatePagination();
+        this.loading = false;
       },
       error: () => {
         this.error = true;
@@ -96,39 +99,56 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  // on search login
+  // ===== PAGINATION =====
+  updatePagination(): void {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
 
-  onSearch(query:string){
-    query=query.toLowerCase();
+    this.pageTasks = this.filteredTasks.slice(start, end);
+    this.displayTasks = [...this.pageTasks]; // reset search on page change
+  }
 
-    this.filteredTasks=this.tasks.filter(task=>
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.updatePagination();
+  }
+
+  // ===== PAGE-ONLY SEARCH =====
+  onSearch(query: string): void {
+    query = query.toLowerCase().trim();
+
+    if (!query) {
+      this.displayTasks = [...this.pageTasks];
+      return;
+    }
+
+    this.displayTasks = this.pageTasks.filter(task =>
       task.title.toLowerCase().includes(query) ||
       task.description.toLowerCase().includes(query)
     );
-    this.currentPage=1;
-    this.updatePagination();
   }
 
+  // ===== STATUS FILTER =====
+  onFilterChange(status: string): void {
+    this.selectedStatus = status;
 
-  onFilterChange(status:string){
-    this.selectedStatus=status;
-    if(status.toLowerCase()==='all' || !status){
-      this.filteredTasks=[...this.tasks];
-    }else{
-      this.filteredTasks=this.tasks.filter(
-        task=>task.status.toLowerCase()===this.selectedStatus.toLowerCase()
-      )
+    if (status === 'all') {
+      this.filteredTasks = [...this.tasks];
+    } else {
+      this.filteredTasks = this.tasks.filter(
+        task => task.status.toLowerCase() === status.toLowerCase()
+      );
     }
-    this.currentPage=1;
+
+    this.currentPage = 1;
     this.updatePagination();
   }
-  
-  //  Called from reusable table
+
+  // ===== TABLE ACTIONS =====
   onEdit(task: Task): void {
     this.router.navigate(['/task/edit', task.id]);
   }
 
-  //  Called from reusable table
   onDelete(task: Task): void {
     const confirmDelete = confirm("Are you sure you want to delete this task?");
     if (!confirmDelete) return;
@@ -136,6 +156,7 @@ export class TaskListComponent implements OnInit {
     this.taskService.deleteTask(task.id).subscribe({
       next: () => {
         this.tasks = this.tasks.filter(t => t.id !== task.id);
+        this.filteredTasks = this.filteredTasks.filter(t => t.id !== task.id);
 
         this.updatePagination();
 
@@ -144,17 +165,5 @@ export class TaskListComponent implements OnInit {
       },
       error: () => this.error = true
     });
-  }
-
-//pagination
-  updatePagination(){
-    const start=(this.currentPage-1)*this.pageSize;
-    const end=start + this.pageSize;
-    this.paginatedTasks=this.filteredTasks.slice(start,end);
-  }
-
-  onPageChange(page:number){
-    this.currentPage=page;
-    this.updatePagination();
   }
 }
