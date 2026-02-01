@@ -2,16 +2,16 @@ import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 
-import { Task } from "../../../core/models/task.model";
 import { TaskService } from "../../../core/services/task.service";
 
-import { ButtonComponent } from "../../../shared/components/button/buttton.component";
+import { ButtonComponent } from "../../../shared/components/button/button.component";
 import { TableComponent, TableColumn } from "../../../shared/components/table/table.component";
 import { FilterDropdownComponent } from "../../../shared/components/filter-dropdown/filter-dropdown.component";
 import { STATUS_FILTER_OPTIONS } from "../../../configs/filter-options.config";
 import { FormsModule } from "@angular/forms";
 import { SearchInputComponent } from "../../../shared/components/search-input/search-input.component";
 import { PaginationComponent } from "../../../shared/components/pagination/pagination.component";
+import { Task } from "../../../core/models/task.model";
 
 @Component({
   selector: 'app-task-list',

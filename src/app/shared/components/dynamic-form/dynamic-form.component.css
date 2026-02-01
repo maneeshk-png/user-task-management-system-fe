@@ -1,13 +1,16 @@
+/* Styles for the dynamic form component */
 form {
     width: 100%;
   }
   
+  /* Form group styling */
   .form-group {
     margin-bottom: 18px;
     display: flex;
     flex-direction: column;
   }
   
+  /* Label styling */
   label {
     font-size: 13px;
     font-weight: 600;
@@ -15,6 +18,7 @@ form {
     color: #374151;
   }
   
+  /* Input, textarea, and select styling */
   input,
 textarea,
 select {
@@ -28,6 +32,7 @@ select {
   font-family: inherit;
 }
 
+  /* Focus state for input, textarea, and select */
 input:focus,
 textarea:focus,
 select:focus {
@@ -36,16 +41,19 @@ select:focus {
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
 }
 
+  /* Textarea styling */
 textarea {
     min-height: 90px;
     resize: vertical;
   }
   
+  /* Error message styling */
   .error {
     color: #dc2626;
     font-size: 12px;
     margin-top: 5px;
   }
+  /* Submit button styling */
   app-button {
     margin-top: 10px;
     display: block;

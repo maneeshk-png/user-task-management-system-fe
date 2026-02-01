@@ -1,10 +1,11 @@
+/* Filter box container */
 .filter-box{
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
 }
-
+/* Dropdown styling */
 .filter-dropdown{
     border-radius: 10px;
     color: black;

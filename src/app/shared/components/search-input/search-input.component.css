@@ -1,9 +1,11 @@
+/* Container for the search input and icon */
 .search-box {
     position: relative;
     display: inline-block;
-    width: 200px; /* can make it flexible with @Input later */
+    width: 200px; 
   }
   
+  /* Input field styling */
   .search-input {
     width: 100%;
     padding: 6px 30px 6px 10px;
@@ -12,6 +14,7 @@
     font-size: 14px;
   }
   
+  /* Search icon styling */
   .search-icon {
     position: absolute;
     right: 8px;
