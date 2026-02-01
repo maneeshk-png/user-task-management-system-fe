@@ -18,14 +18,15 @@ export interface FilterOption {
 export class FilterDropdownComponent {
 
 
-    @Input() label:string='';
-    @Input() options:FilterOption[]=[];
+    @Input() label:string=''; // Label for the dropdown
+    @Input() options:FilterOption[]=[];// Options for the dropdown
     
-    @Input() selectedValue:string='All';
+    @Input() selectedValue:string='all'; // Currently selected value
 
 
-    @Output() selectionChange=new EventEmitter<string>();
+    @Output() selectionChange=new EventEmitter<string>(); // Emits when selection changes
 
+    // Handle selection change
     onSelect(value:string){
         this.selectionChange.emit(value);
     }

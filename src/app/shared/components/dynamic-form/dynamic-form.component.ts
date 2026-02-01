@@ -1,18 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ButtonComponent } from '../button/buttton.component';
-
-
-export interface FormField {
-  name: string;
-  label: string;
-  type: string; // text, password, textarea, select, custom
-  validators?: any[];
-  options?: { label: string, value: any }[]; // for select
-  placeholder?: string;
-  template?: any; // optional for custom components
-}
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms'; 
+import { ButtonComponent } from '../button/button.component';
+import { FormField } from './models/form-field.model';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -23,6 +13,8 @@ export interface FormField {
 })
 export class DynamicFormComponent implements OnInit {
   @Input() fields: FormField[] = [];
+
+  // Default values for form fields (used for edit / prefill scenarios
   @Input() initialData: any = {};
   @Input() submitLabel = 'Submit';
   @Input() loading = false;
@@ -32,6 +24,8 @@ export class DynamicFormComponent implements OnInit {
 
   ngOnInit() {
     const group: any = {};
+
+     // Dynamically create form controls from field
     this.fields.forEach(f => {
       group[f.name] = new FormControl(this.initialData[f.name] || '', f.validators || []);
     });

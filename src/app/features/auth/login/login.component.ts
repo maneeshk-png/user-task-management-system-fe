@@ -1,36 +1,30 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthService } from "../../../core/services/auth.service";
-import { LoginFormConfig } from '../../../configs/forms-config';
+import { AuthService } from "../auth.service";
 import { DynamicFormComponent } from "../../../shared/components/dynamic-form/dynamic-form.component";
-import { ButtonComponent } from "../../../shared/components/button/buttton.component";
+import { LoginFormSchema } from "./login-form.schema";
 
 @Component({
   selector:'app-login',
-  standalone:true,
-  imports:[DynamicFormComponent],
+  standalone:true, // Standalone component (Angular 21 style)
+  imports:[DynamicFormComponent], // Uses reusable dynamic form component
   templateUrl:'./login.component.html',
   styleUrls:['./login.component.css']
 })
 export class LoginComponent {
-  fields = LoginFormConfig;
-  initialData = {};
+  // Dynamic form field configuration for login (username, password)
+  fields = LoginFormSchema;
+
+   // Controls loading state during API call
   loading = false;
+
+  // Stores authentication error message
   errorMsg = '';
 
+  // Dependency injection of AuthService and Router
   constructor(private authService: AuthService, private router: Router) {}
 
-
-
-  canActivate():boolean {
-    if(this.authService.isLoggedIn()){
-      this.router.navigate(['/dashboard']);
-      return false;
-    }
-    return true;
-  }
-
-
+// Handles form submission for login
   onLogin(data: any) {
     this.loading = true;
     this.errorMsg = '';

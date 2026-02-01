@@ -1,7 +1,7 @@
 // table.component.ts
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from '../button/buttton.component';
+import { ButtonComponent } from '../button/button.component';
 
 export interface TableColumn<T = any> {
   key: keyof T;      // property of object
@@ -18,8 +18,8 @@ export interface TableColumn<T = any> {
 export class TableComponent<T = any> {
   @Input() data: T[] = [];                 // Generic data array
   @Input() columns: TableColumn<T>[] = []; // Column definitions
-  @Input() loading = false;
+  @Input() loading = false;  // Loading state
 
-  @Output() edit = new EventEmitter<T>();
-  @Output() delete = new EventEmitter<T>();
+  @Output() edit = new EventEmitter<T>();  // Edit event
+  @Output() delete = new EventEmitter<T>();  // Delete event
 }

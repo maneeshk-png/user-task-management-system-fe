@@ -1,13 +1,15 @@
+
 <div class="page-wrapper">
   <div class="login-card">
-    <h2>Welcome Back 👋</h2>
+    <h2>Welcome Back...</h2>
     <p class="subtitle">Login to continue</p>
 
+    <!-- Display server error message if any -->
     <div class="error server-error" *ngIf="errorMsg">{{ errorMsg }}</div>
 
+    <!-- Reusable dynamic form component for login -->
     <app-dynamic-form
       [fields]="fields"
-      [initialData]="initialData"
       [loading]="loading"
       submitLabel="Login"
       (submitForm)="onLogin($event)">

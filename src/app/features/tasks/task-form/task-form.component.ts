@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router} from '@angular/router';
 import { TaskService } from '../../../core/services/task.service';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from '../../../shared/components/button/buttton.component';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-task-form',
@@ -14,24 +14,28 @@ import { ButtonComponent } from '../../../shared/components/button/buttton.compo
 })
 export class TaskFormComponent {
 
-  taskForm!: FormGroup;   // ✅ ONLY declaration here
+  // Reactive Form Group for Task
+  taskForm!: FormGroup; // Form group instance   
 
-  loading = false;
-  successMessage = '';
-  errorMessage = '';
+  
+  loading = false; // Loading state during API call
+  successMessage = '';// Success message after operation
+  errorMessage = '';// Error message if operation fails
 
-  isEditMode=false;
-  taskId!:number;
+  isEditMode=false; // Flag to indicate edit mode
+  taskId!:number;  // ID of task being edited
 
-  pageReady=false;
+  pageReady=false; // Flag to indicate page is ready (data loaded)
+
+
 
   constructor(
-    private fb: FormBuilder,
+    private fb: FormBuilder, // FormBuilder for reactive forms
     private taskService: TaskService,
     private router: Router,
-    private route:ActivatedRoute
+    private route:ActivatedRoute // ActivatedRoute to access route parameters
   ) {
-    // ✅ Initialize form AFTER fb is available
+    // Initialize the form with default values and validators
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
       description: [''],
@@ -39,34 +43,37 @@ export class TaskFormComponent {
     });
   }
 
+  // On component initialization
 ngOnInit(){
   this.route.paramMap.subscribe(params=>{
     const id=params.get('id');
 
     if(id){
-      this.isEditMode=true;
-      this.taskId=+id;
+      this.isEditMode=true; // Set edit mode
+      this.taskId=+id; // Convert id to number
 
-      this.taskService.getTaskById(this.taskId).subscribe(task=>{
+      this.taskService.getTaskById(this.taskId).subscribe(task=>{ // Fetch task data by ID
         if(!task){
           this.errorMessage='Task Not Found';
 
+          // Redirect to task list after showing error
           setTimeout(()=>{
             this.router.navigate(['/task']);
           },1200)
           return;
         }
 
-        this.taskForm.patchValue(task); 
-        this.pageReady=true;
+        this.taskForm.patchValue(task);  // Populate form with task data
+        this.pageReady=true; // Set page ready flag
           //task found update form
       })
     }else{
-      this.pageReady=true;
+      this.pageReady=true; // Set page ready flag for new task
     }
   })
 }
 
+// Handle form submission for creating or updating a task
   submit() {
 
     if(this.loading) return;
