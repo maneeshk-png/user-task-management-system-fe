@@ -6,9 +6,10 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { TaskListComponent } from './features/tasks/task-list/task-list.component';
 import { TaskFormComponent } from './features/tasks/task-form/task-form.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { GuestGuard } from './core/guards/guest.guard';
 
 export const routes: Routes = [
-{path:'login',component:LoginComponent},
+{path:'login',component:LoginComponent,canActivate:[GuestGuard]},
 {path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
 { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'task', component:TaskListComponent, canActivate: [AuthGuard] },
