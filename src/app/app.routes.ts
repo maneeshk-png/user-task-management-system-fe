@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { TaskListComponent } from './features/tasks/task-list/task-list.component';
 import { TaskFormComponent } from './features/tasks/task-form/task-form.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
 export const routes: Routes = [
 {path:'login',component:LoginComponent},
@@ -12,7 +13,8 @@ export const routes: Routes = [
 { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'task', component:TaskListComponent, canActivate: [AuthGuard] },
   { path: 'task/create', component:TaskFormComponent, canActivate: [AuthGuard] },
-  {path:'task/edit/:id',component:TaskFormComponent, canActivate:[AuthGuard]}
+  {path:'task/edit/:id',component:TaskFormComponent, canActivate:[AuthGuard]},
+  {path:'**',component:NotFoundComponent}
 ];
 
 @NgModule({

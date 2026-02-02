@@ -1,29 +1,33 @@
-.header{
+/* Header container */
+.header {
   display: flex;
+  flex-wrap: wrap; /* allows items to wrap on smaller screens */
   justify-content: space-between;
-  align-items:center;
+  align-items: center;
   margin-top: 25px;
   padding: 10px;
+  gap: 10px; /* spacing between items when wrapped */
 }
 
-/* lft group: title and filter */
-.header-left{
+/* Left group: title and filter */
+.header-left {
   display: flex;
+  flex-wrap: wrap; /* wrap items if not enough space */
   align-items: center;
   gap: 16px;
 }
 
-
 /* Title */
-
-.header h2{
+.header h2 {
   margin: 0;
   font-size: 22px;
   font-weight: 600;
   color: #333;
+  white-space: nowrap; /* prevent title from breaking mid-word */
 }
 
-.empty{
+/* Empty state */
+.empty {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,14 +35,65 @@
   font-size: 25px;
   color: rgb(26, 119, 26);
   font-weight: 900;
+  text-align: center;
 }
 
-.status-dropdown{
+/* Status dropdown */
+.status-dropdown {
   border: 2px solid black;
-  padding: 5px;
-  background-color:rgb(255, 255, 255);
+  padding: 5px 10px;
+  background-color: rgb(255, 255, 255);
+  font-size: 16px;
+  border-radius: 5px;
+  min-width: 150px;
 }
 
-app-search-input{
-  margin-left: 500px;
+/* Search input */
+app-search-input {
+  flex: 1; /* take remaining space */
+  min-width: 200px; /* prevent shrinking too small */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .header-left {
+    gap: 12px;
+  }
+
+  .header h2 {
+    font-size: 20px;
+  }
+
+  .status-dropdown {
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; /* stack elements vertically */
+    align-items: stretch;   /* full width */
+  }
+
+  .header-left {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  app-search-input {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+@media (max-width: 480px) {
+  .header h2 {
+    font-size: 18px;
+  }
+  .status-dropdown {
+    padding: 4px 8px;
+    font-size: 14px;
+  }
+  app-search-input {
+    min-width: 100%;
+  }
 }
