@@ -34,7 +34,7 @@ export class TaskListComponent implements OnInit {
   // ===== DATA LAYERS =====
   tasks: Task[] = [];          // all tasks from API
   filteredTasks: Task[] = []; // after status filter
-  pageTasks: Task[] = [];     // current page only
+  //pageTasks: Task[] = [];     // current page only
   displayTasks: Task[] = [];  // table display (search result)
 
   // ===== UI STATE =====
@@ -47,6 +47,7 @@ export class TaskListComponent implements OnInit {
   loading = true;
   error = false;
   successMessage = '';
+  searchQuery = ''; // search query for task list
 
   // ===== TABLE CONFIG =====
   columns: TableColumn<Task>[] = [
@@ -100,13 +101,30 @@ export class TaskListComponent implements OnInit {
   }
 
   // ===== PAGINATION =====
-  updatePagination(): void {
+  private updatePagination(): void {
+    let source = this.filteredTasks;
+  
+    // Apply search first
+    if (this.searchQuery) {
+      source = source.filter(task =>
+        task.title.toLowerCase().includes(this.searchQuery) ||
+        task.description.toLowerCase().includes(this.searchQuery)
+      );
+    }
+  
+    // Adjust current page if needed
+    const totalPages = Math.ceil(source.length / this.pageSize);
+    if (this.currentPage > totalPages && totalPages > 0) {
+      this.currentPage = totalPages;
+    }
+  
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-
-    this.pageTasks = this.filteredTasks.slice(start, end);
-    this.displayTasks = [...this.pageTasks]; // reset search on page change
+  
+    this.displayTasks = source.slice(start, end);
   }
+  
+  
 
   onPageChange(page: number): void {
     this.currentPage = page;
@@ -115,22 +133,16 @@ export class TaskListComponent implements OnInit {
 
   // ===== PAGE-ONLY SEARCH =====
   onSearch(query: string): void {
-    query = query.toLowerCase().trim();
-
-    if (!query) {
-      this.displayTasks = [...this.pageTasks];
-      return;
-    }
-
-    this.displayTasks = this.pageTasks.filter(task =>
-      task.title.toLowerCase().includes(query) ||
-      task.description.toLowerCase().includes(query)
-    );
+    this.searchQuery = query.toLowerCase().trim();
+    this.currentPage = 1;
+   this.updatePagination();
   }
+
 
   // ===== STATUS FILTER =====
   onFilterChange(status: string): void {
     this.selectedStatus = status;
+    this.currentPage = 1;
 
     if (status === 'all') {
       this.filteredTasks = [...this.tasks];
@@ -140,7 +152,6 @@ export class TaskListComponent implements OnInit {
       );
     }
 
-    this.currentPage = 1;
     this.updatePagination();
   }
 
@@ -166,4 +177,20 @@ export class TaskListComponent implements OnInit {
       error: () => this.error = true
     });
   }
+  // inside TaskListComponent class
+get totalItems(): number {
+  let source = this.filteredTasks;
+
+  // Apply search filter if active
+  if (this.searchQuery) {
+    source = source.filter(task =>
+      task.title.toLowerCase().includes(this.searchQuery) ||
+      task.description.toLowerCase().includes(this.searchQuery)
+    );
+  }
+
+  return source.length;
 }
+
+}
+
