@@ -38,13 +38,13 @@
   <p *ngIf="successMessage" class="success">{{ successMessage }}</p>
 
   <!-- Empty State -->
-  <div *ngIf="!loading && !error && tasks.length === 0" class="empty">
+  <div *ngIf="!loading && !error && displayTasks.length === 0" class="empty">
     No tasks available. Please create a task.
   </div>
 
   <!-- Reusable Table -->
   <app-table
-    *ngIf="!loading && tasks.length > 0"
+    *ngIf="!loading && displayTasks.length > 0"
     [data]="displayTasks"
     [columns]="columns"
     [loading]="loading"
@@ -53,7 +53,7 @@
   </app-table>
 
   <app-pagination *ngIf="!loading && filteredTasks.length > 0"
-  [totalItems]="filteredTasks.length"
+  [totalItems]="totalItems"
   [pageSize]="pageSize"
   [currentPage]="currentPage"
   (pageChange)="onPageChange($event)"
