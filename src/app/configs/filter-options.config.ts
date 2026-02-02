@@ -1,6 +1,8 @@
-import { FilterOption } from '../shared/components/filter-dropdown/filter-dropdown.component';
+import { FilterOption } from "../core/models/filter-option.model";
+import { TaskStatus } from "../core/models/task-status.type";
 
-export const STATUS_FILTER_OPTIONS: FilterOption[] = [
+
+export const STATUS_FILTER_OPTIONS: FilterOption<TaskStatus | 'all'>[] = [
   { label: 'All', value: 'all' },
   { label: 'Todo', value: 'todo' },
   { label: 'In Progress', value: 'in-progress' },
