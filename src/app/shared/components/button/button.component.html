@@ -1,1 +1,10 @@
-<button [type]="type" [ngClass]="variant" (click)="onClick()" >{{label}}</button>
+<button
+ [type]="type"
+ [disabled]="disabled"
+  [ngClass]="[
+    'btn',
+    variant,
+    disabled ? 'btn-disabled' : ''
+  ]"
+  (click)="onClick()"
+   >{{label}}</button>
