@@ -2,16 +2,16 @@ import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 
-import { TaskService } from "../../../core/services/task.service";
+import { TaskService } from "../../services/task.service";
 
-import { ButtonComponent } from "../../../shared/components/button/button.component";
-import { TableComponent, TableColumn } from "../../../shared/components/table/table.component";
-import { FilterDropdownComponent } from "../../../shared/components/filter-dropdown/filter-dropdown.component";
-import { STATUS_FILTER_OPTIONS } from "../../../configs/filter-options.config";
+import { ButtonComponent } from "../../../../shared/ui/button/button.component";
+import { TableComponent, TableColumn } from "../../../../shared/ui/table/table.component";
+import { FilterDropdownComponent } from "../../../../shared/ui/filter-dropdown/filter-dropdown.component";
+import { STATUS_FILTER_OPTIONS } from "../../configs/task-filter-options.config";
 import { FormsModule } from "@angular/forms";
-import { SearchInputComponent } from "../../../shared/components/search-input/search-input.component";
-import { PaginationComponent } from "../../../shared/components/pagination/pagination.component";
-import { Task } from "../../../core/models/task.model";
+import { SearchInputComponent } from "../../../../shared/ui/search-input/search-input.component";
+import { PaginationComponent } from "../../../../shared/ui/pagination/pagination.component";
+import { Task } from "../../models/task.model";
 
 @Component({
   selector: 'app-task-list',

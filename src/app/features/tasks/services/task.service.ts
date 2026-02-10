@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Task } from "../models/task.model";
 import { delay, Observable, of, throwError } from "rxjs";
-import { StorageService } from "./storage.service";
+import { StorageService } from "../../../core/services/storage.service";
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {

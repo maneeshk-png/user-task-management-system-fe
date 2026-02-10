@@ -79,6 +79,7 @@ changePage(page: number | string) {
   }
 }
 
+
 next() {
   if (this.currentPage < this.totalPages) {
     this.pageChange.emit(this.currentPage + 1);

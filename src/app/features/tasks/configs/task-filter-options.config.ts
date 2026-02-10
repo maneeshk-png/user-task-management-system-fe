@@ -1,5 +1,5 @@
-import { FilterOption } from "../core/models/filter-option.model";
-import { TaskStatus } from "../core/models/task-status.type";
+import { FilterOption } from "../../../shared/models/filter-option.model";
+import { TaskStatus } from "../models/task-status.type";
 
 
 export const STATUS_FILTER_OPTIONS: FilterOption<TaskStatus | 'all'>[] = [

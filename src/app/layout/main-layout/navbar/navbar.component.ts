@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../features/auth/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule, NgClass } from '@angular/common';
-import { ButtonComponent } from '../button/button.component';
+import { ButtonComponent } from '../../../shared/ui/button/button.component';
 
 @Component({
   selector: 'app-navbar',

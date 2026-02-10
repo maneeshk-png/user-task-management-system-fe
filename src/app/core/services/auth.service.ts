@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { delay, map, Observable, of } from "rxjs";
-import { User } from "../../core/models/auth.model";
-import { StorageService } from "../../core/services/storage.service";
+import { User } from "../../features/auth/models/user.model";
+import { StorageService } from "./storage.service";
 
 @Injectable({
     providedIn:'root'
@@ -24,7 +24,7 @@ export class AuthService {
                 this.storage.setItem('user',safeUser);
             return safeUser;
             }else{
-                return null;
+               return null;
             }
         })
         )

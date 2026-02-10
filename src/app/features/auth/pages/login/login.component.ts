@@ -1,13 +1,14 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthService } from "../auth.service";
-import { DynamicFormComponent } from "../../../shared/components/dynamic-form/dynamic-form.component";
+import { AuthService } from "../../../../core/services/auth.service";
+import { DynamicFormComponent } from "../../../../shared/form/dynamic-form/dynamic-form.component";
 import { LoginFormSchema } from "./login-form.schema";
+import { CommonModule, NgClass } from '@angular/common';
 
 @Component({
   selector:'app-login',
   standalone:true, // Standalone component (Angular 21 style)
-  imports:[DynamicFormComponent], // Uses reusable dynamic form component
+  imports:[CommonModule,DynamicFormComponent], // Uses reusable dynamic form component
   templateUrl:'./login.component.html',
   styleUrls:['./login.component.css']
 })

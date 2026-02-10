@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { TaskService } from "../../core/services/task.service";
-import { AuthService } from "../auth/auth.service";
-import { Task } from "../../core/models/task.model";
+import { TaskService } from "../tasks/services/task.service";
+import { AuthService } from "../../core/services/auth.service";
+import { Task } from "../tasks/models/task.model";
 import { CommonModule } from "@angular/common";
 import { Router, RouterLink } from "@angular/router";
-import { ButtonComponent } from "../../shared/components/button/button.component";
-import { SummaryCardComponent } from "../../shared/components/summary-card/summary-card.component";
+import { ButtonComponent } from "../../shared/ui/button/button.component";
+import { SummaryCardComponent } from "../../shared/ui/summary-card/summary-card.component";
 
 @Component({
     selector: 'app-dashboard',
