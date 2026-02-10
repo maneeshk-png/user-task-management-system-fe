@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms'; 
-import { ButtonComponent } from '../button/button.component';
+import { ButtonComponent } from '../../ui/button/button.component';
 import { FormField } from './models/form-field.model';
 
 @Component({

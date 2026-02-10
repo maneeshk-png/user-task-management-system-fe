@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router} from '@angular/router';
-import { TaskService } from '../../../core/services/task.service';
+import { TaskService } from '../../services/task.service';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { ButtonComponent } from '../../../../shared/ui/button/button.component';
 
 @Component({
   selector: 'app-task-form',

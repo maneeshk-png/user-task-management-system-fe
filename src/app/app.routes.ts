@@ -1,11 +1,11 @@
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './features/auth/login/login.component';
+import { LoginComponent } from './features/auth/pages/login/login.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
-import { TaskListComponent } from './features/tasks/task-list/task-list.component';
-import { TaskFormComponent } from './features/tasks/task-form/task-form.component';
-import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { TaskListComponent } from './features/tasks/pages/task-list/task-list.component';
+import { TaskFormComponent } from './features/tasks/pages/task-form/task-form.component';
+import { NotFoundComponent } from './core/pages/not-found/not-found.component';
 import { GuestGuard } from './core/guards/guest.guard';
 
 export const routes: Routes = [
